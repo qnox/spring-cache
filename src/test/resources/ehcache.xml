@@ -1,0 +1,19 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd">
+
+       <cache name="localTx"
+           maxElementsInMemory="100"
+           overflowToDisk="false"
+           timeToIdleSeconds="5"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LRU"
+           transactionalMode="local"/>
+
+       <cache name="noTx"
+              maxElementsInMemory="100"
+              overflowToDisk="false"
+              timeToIdleSeconds="5"
+              timeToLiveSeconds="600"
+              memoryStoreEvictionPolicy="LRU"
+              transactionalMode="off"/>
+
+</ehcache>
