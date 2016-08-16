@@ -22,6 +22,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 /**
  * Cache decorator which synchronizes its {@link #put}, {@link #evict} and {@link #clear}
@@ -59,13 +60,23 @@ class TxAwareCacheDecorator implements Cache {
     }
 
     @Override
-    public ValueWrapper get(Object key) {
-        return getHolder().get(key, cache.get(key));
+    public ValueWrapper get(final Object key) {
+        return getHolder().get(key, new Callable<ValueWrapper>() {
+            @Override
+            public ValueWrapper call() {
+                return cache.get(key);
+            }
+        });
     }
 
     @Override
-    public <T> T get(Object key, Class<T> type) {
-        ValueWrapper obj = getHolder().get(key, cache.get(key));
+    public <T> T get(final Object key, Class<T> type) {
+        ValueWrapper obj = getHolder().get(key, new Callable<ValueWrapper>() {
+            @Override
+            public ValueWrapper call() {
+                return cache.get(key);
+            }
+        });
         if (obj == null) {
             return null;
         }
@@ -94,9 +105,9 @@ class TxAwareCacheDecorator implements Cache {
 
     private TxAwareCacheResourceHolder getHolder() {
         TxAwareCacheResourceHolder result;
-        if (!TransactionSynchronizationManager.hasResource(TxAwareCacheResourceHolder.class)) {
+        if (!TransactionSynchronizationManager.hasResource(cache)) {
             TxAwareCacheResourceHolder value = new TxAwareCacheResourceHolder();
-            TransactionSynchronizationManager.registerSynchronization(new ResourceHolderSynchronization<TxAwareCacheResourceHolder, Class<TxAwareCacheResourceHolder>>(value, TxAwareCacheResourceHolder.class) {
+            TransactionSynchronizationManager.registerSynchronization(new ResourceHolderSynchronization<TxAwareCacheResourceHolder, Cache>(value, cache) {
                 @Override
                 protected boolean shouldReleaseBeforeCompletion() {
                     return false;
@@ -116,10 +127,10 @@ class TxAwareCacheDecorator implements Cache {
 
                 }
             });
-            TransactionSynchronizationManager.bindResource(TxAwareCacheResourceHolder.class, value);
+            TransactionSynchronizationManager.bindResource(cache, value);
             result = value;
         } else {
-            result = (TxAwareCacheResourceHolder) TransactionSynchronizationManager.getResource(TxAwareCacheResourceHolder.class);
+            result = (TxAwareCacheResourceHolder) TransactionSynchronizationManager.getResource(cache);
         }
         return result;
     }

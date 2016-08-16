@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 public class TxAwareCacheResourceHolder extends ResourceHolderSupport {
 
@@ -54,14 +55,24 @@ public class TxAwareCacheResourceHolder extends ResourceHolderSupport {
         return evictedKeys.contains(key);
     }
 
-    public Cache.ValueWrapper get(Object key, Cache.ValueWrapper valueWrapper) {
+    public Cache.ValueWrapper get(Object key, Callable<Cache.ValueWrapper> valueWrapperSuppplier) {
         if (isEvicted(key)) {
             return null;
         }
         if (putted.containsKey(key)) {
             return new SimpleValueWrapper(putted.get(key));
         }
-        return !cleared ? valueWrapper : null;
+        Cache.ValueWrapper result;
+        try {
+            result = !cleared ? valueWrapperSuppplier.call() : null;
+        } catch (Exception e) {
+            if (e instanceof RuntimeException) {
+                throw (RuntimeException) e;
+            } else {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 
     public Cache.ValueWrapper putIfAbsent(Object key, Object value, Cache.ValueWrapper valueWrapper) {
