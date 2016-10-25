@@ -6,7 +6,7 @@
 
     <groupId>me.qnox</groupId>
     <artifactId>spring-cache</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Spring cache extensions</name>
     <description>Collection of spring cache extensions</description>
@@ -29,7 +29,7 @@
     <scm>
         <connection>scm:git:git@github.com:qnox/spring-cache.git</connection>
         <developerConnection>scm:git:git@github.com:qnox/spring-cache.git</developerConnection>
-        <url>git@github.com:qnox/spring-cache.git</url>
+        <url>https://github.com/qnox/spring-cache</url>
     </scm>
 
     <build>
@@ -116,16 +116,19 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>4.2.0.RELEASE</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
             <version>1.10.2.RELEASE</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
             <version>2.6.11</version>
+            <scope>optional</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

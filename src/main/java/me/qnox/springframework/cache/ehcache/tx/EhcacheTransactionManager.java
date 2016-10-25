@@ -23,6 +23,11 @@ import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 import org.springframework.transaction.support.DefaultTransactionStatus;
 
+/**
+ * {@link org.springframework.transaction.PlatformTransactionManager} based on Ehcache {@link TransactionController}
+ *
+ * @author Anton Efimchuk
+ */
 public class EhcacheTransactionManager extends AbstractPlatformTransactionManager {
 
     private TransactionController transactionController;

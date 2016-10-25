@@ -37,6 +37,8 @@ import java.util.concurrent.Callable;
  * </ul></p>
  *
  * @see TxAwareCacheManagerProxy
+ *
+ * @author Anton Efimchuk
  */
 class TxAwareCacheDecorator implements Cache {
 

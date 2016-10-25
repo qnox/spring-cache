@@ -24,6 +24,8 @@ import java.util.Collection;
 /**
  * Proxy for a target {@link CacheManager}, exposing transaction-aware {@link Cache} objects
  * which synchronize their {@link Cache#put} operations with Spring-managed transactions.
+ *
+ * @author Anton Efimchuk
  */
 public class TxAwareCacheManagerProxy implements CacheManager {
     private final CacheManager targetCacheManager;

@@ -26,6 +26,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+/**
+ * {@link org.springframework.transaction.support.ResourceHolder} implementation holds cache modifications inside
+ * transaction
+ *
+ * @author Anton Efimchuk
+ */
 public class TxAwareCacheResourceHolder extends ResourceHolderSupport {
 
     private Set<Object> evictedKeys = new HashSet<>();
