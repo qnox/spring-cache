@@ -5,4 +5,4 @@ jdk:
   - oraclejdk7
   - openjdk7
 
-install: mvn clean install
+install: mvn clean install -Dgpg.skip=true
