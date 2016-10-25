@@ -1,6 +1,6 @@
 Spring cache extensions library
 =====================================
-
+[![Build Status](https://travis-ci.org/qnox/spring-cache.svg?branch=master)](https://travis-ci.org/qnox/spring-cache)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/me.qnox/spring-cache/badge.svg)](https://maven-badges.herokuapp.com/maven-central/me.qnox/spring-cache)
 
 Library was inspired by a question on [StackOverflow](http://stackoverflow.com/questions/31944204/ehcache-local-transactions-with-spring-transactional) and provides set of support classes for spring cache abstraction:
