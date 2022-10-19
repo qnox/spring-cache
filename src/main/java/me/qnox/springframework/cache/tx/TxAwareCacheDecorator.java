@@ -17,6 +17,7 @@
 package me.qnox.springframework.cache.tx;
 
 import org.springframework.cache.Cache;
+import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.transaction.support.ResourceHolderSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
@@ -72,17 +73,31 @@ class TxAwareCacheDecorator implements Cache {
     }
 
     @Override
-    public <T> T get(final Object key, Class<T> type) {
+    public <T> T get(final Object key, final Class<T> type) {
         ValueWrapper obj = getHolder().get(key, new Callable<ValueWrapper>() {
             @Override
             public ValueWrapper call() {
-                return cache.get(key);
+                return  new SimpleValueWrapper(cache.get(key, type));
             }
         });
         if (obj == null) {
             return null;
         }
         return type.cast(obj.get());
+    }
+
+    @Override
+    public <T> T get(final Object key, final Callable<T> valueLoader) {
+        ValueWrapper obj = getHolder().get(key, new Callable<ValueWrapper>() {
+            @Override
+            public ValueWrapper call() {
+                return new SimpleValueWrapper(cache.get(key, valueLoader));
+            }
+        });
+        if (obj == null) {
+            return null;
+        }
+        return (T) obj.get();
     }
 
     @Override
@@ -127,6 +142,11 @@ class TxAwareCacheDecorator implements Cache {
                         cache.evict(evictedKey);
                     }
 
+                }
+
+                @Override
+                public int getOrder() {
+                    return HIGHEST_PRECEDENCE;
                 }
             });
             TransactionSynchronizationManager.bindResource(cache, value);

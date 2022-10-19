@@ -7,6 +7,10 @@
     <groupId>me.qnox</groupId>
     <artifactId>spring-cache</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <spring.version>5.3.23</spring.version>
+        <spring-data.version>2.7.5</spring-data.version>
+    </properties>
     <packaging>jar</packaging>
     <name>Spring cache extensions</name>
     <description>Collection of spring cache extensions</description>
@@ -75,28 +79,28 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.2.0.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>4.2.0.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>4.2.0.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>4.2.0.RELEASE</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
-            <version>1.10.2.RELEASE</version>
+            <version>${spring-data.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -109,7 +113,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.2</version>
         </dependency>
     </dependencies>
 
