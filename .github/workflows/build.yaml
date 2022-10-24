@@ -33,7 +33,7 @@ jobs:
 
       - name: Build with Maven
         if: ${{ github.ref != 'refs/heads/master' }}
-        run: mvn --batch-mode -Drevision=${{ steps.gitversion.outputs.version }} package --file pom.xml
+        run: mvn --batch-mode -Drevision=${{ steps.gitversion.outputs.version }} package
 
       - name: Build and Publish to Apache Maven Central
         if: ${{ github.ref == 'refs/heads/master' }}
